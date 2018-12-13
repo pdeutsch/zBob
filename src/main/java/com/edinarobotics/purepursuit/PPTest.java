@@ -13,13 +13,6 @@ public class PPTest {
      */
     public static void main(String [] args) {
         testLine();
-    	// if (args.length > 1 && args[0].equals("-f")) {
-    	// 	readFile(args[1]);
-    	// } else if (args.length > 1 && args[0].equals("-l")) {
-    	// 	testLine();
-    	// } else {
-    	// 	testCalc(args);
-    	// }
     }
     
     public static void testLine() {
@@ -61,63 +54,5 @@ public class PPTest {
 	            System.out.println(msg);
             }
         }
-    }
-    
-    public static void readFile(String fname) {
-		PPPoint pt1 = new PPPoint(0,0);
-		PPPoint pt2 = new PPPoint(0, 24);
-		PPPoint pt3 = new PPPoint(36, 36);
-		PPPoint pt4 = new PPPoint(60, 60);
-
-    	PPPoint pts[] = {pt1, pt2, pt3, pt4 };
-        double lookAheadDist = 4.0;
-        double targetVelocity = 0.25;
-
-        int idx = 0, lineNum = 0;
-        PurePursuitCalc calc = new PurePursuitCalc(pts[idx], pts[idx+1], lookAheadDist, targetVelocity);
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(fname))) {
-    		String ln;
-    		double x, y, currHdg, data[], alldata[];
-    		
-    		while ( (ln = reader.readLine()) != null) {
-	    		if (ln.length() < 10) continue;
-	    		String flds[] = ln.split(",");
-	    		if (flds.length < 3) continue;
-	    		if (flds[0].startsWith("curr")) {
-	    			if (lineNum > 0) {
-	    				idx++;
-	    				System.out.println("--------------------------------------------------------------------");
-	    				if (idx > pts.length - 2) {
-	    					break;
-	    				}
-	    		        calc = new PurePursuitCalc(pts[idx], pts[idx+1], lookAheadDist, targetVelocity);
-
-	    			};
-	    			continue;
-	    		}
-	    		x = Double.parseDouble(flds[0]);
-	    		y = Double.parseDouble(flds[1]);
-	    		currHdg = Double.parseDouble(flds[2]);
-	    		
-	    		data = calc.calcVelocities(x, y, currHdg);
-	            alldata = calc.getData();
-	            // currX, currY, currHeading, desiredHeading, angleErr, control, leftSetV, rightSetV
-
-	            String msg = String.format("currX=%6.2f, currY=%6.2f, currHdg=%6.2f, desHdg=%7.2f, angErr=%6.2f, ctrl=%5.2f, leftSetV=%6.2f, rightSetV=%6.2f",
-	                    alldata[0], alldata[1], alldata[2], alldata[3], alldata[4], alldata[5], alldata[6], alldata[7]);
-	            System.out.print(msg);
-	            if (flds.length > 3) {
-	            	System.out.printf(",  fl-desHdg=%7.2f, fl-angErr=%6.2f", Double.parseDouble(flds[3]), Double.parseDouble(flds[4]));
-	            }
-	            System.out.println();
-	            	
-	            lineNum++;
-	            if (lineNum > 60) break;
-    		}
-    	} catch (Exception e) {
-    		System.out.println("ERROR: " + e.getMessage());
-    		e.printStackTrace();
-    	}
     }
 }

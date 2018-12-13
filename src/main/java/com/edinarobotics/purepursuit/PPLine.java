@@ -9,7 +9,7 @@ package com.edinarobotics.purepursuit;
  * @version   2.0
  * @since     2018-11-14
  */
-public class PPLine {
+public class PPLine implements LineBase {
     PPPoint pt1;
     PPPoint pt2;
     private double angle;
@@ -24,6 +24,10 @@ public class PPLine {
         this.targetDeltaX = Math.sqrt((pt2.x - pt1.x)*(pt2.x - pt1.x) + (pt2.y - pt1.y)*(pt2.y - pt1.y));
     }
 
+    @Override
+    public PPPoint getPt1() { return pt1; }
+    @Override
+    public PPPoint getPt2() { return pt2; }
     public double getAngleRad() { return angle; }
     public double getAngleDeg() { return Math.toDegrees(angle); }
 
@@ -88,4 +92,6 @@ public class PPLine {
             return true;
         }
     }
+
+
 }

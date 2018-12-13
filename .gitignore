@@ -2,12 +2,13 @@
 .vscode/
 
 /.gradle/
-.iws
-.iml
-.ipr
+*.iws
+*.iml
+*.ipr
 /.classpath
 /.project
 /.settings/
+.idea/
 /build/
 /bin/
 
@@ -29,7 +30,7 @@ gradle-app.setting
 .idea/
 
 # Why should I need to add this?
-.class
+*.class
 
 # Log Files
 *.csv
